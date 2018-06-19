@@ -24,7 +24,21 @@ const addInstrument = (instrument, callback) => {
   })
   db.put(modifiedInstrument, callback)
 }
-
+const deleteInstrument = (instrumentID, callback) => {
+  db.get(instrumentID, function(err, doc) {
+    if (err) {
+      callback(err)
+      return
+    }
+    db.remove(doc, function(err, deleteResult) {
+      if (err) {
+        callback(err)
+        return
+      }
+      callback(null, deleteResult)
+    })
+  })
+}
 ///////////////////////////
 ////  HELPER FUNCTIONS ////
 ///////////////////////////
@@ -36,7 +50,8 @@ function getDoc(id, callback) {
 
 const dal = {
   getInstrument,
-  addInstrument
+  addInstrument,
+  deleteInstrument
 }
 
 module.exports = dal
