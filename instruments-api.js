@@ -58,13 +58,26 @@ app.post('/instruments', function(req, res, next) {
   })
 })
 
-app.delete('./instruments/:instrumentID', function(req, res, next) {
-  const instrumentID = req.params.instrumentsID
+app.put('./instruments/:instrumentID', function(req, res, next) {
+  const instrument = req.body
+  updateInstrument(instrument, function(err, success) {
+    if (err) {
+      next(new NodeHTTPError(err.status, err.message, err))
+      return
+    }
+    res.status(200).send(success)
+  })
+})
+
+app.delete('/instruments/:instrumentID', function(req, res, next) {
+  const instrumentID = req.params.instrumentID
+
   deleteInstrument(instrumentID, function(err, data) {
     if (err) {
+      next(new NodeHTTPError(err.status, err.message, err))
     }
+    res.status(200).send(data)
   })
-  console.log('instrumentsID', instrumentsID)
 })
 
 app.use(function(err, req, res, next) {
