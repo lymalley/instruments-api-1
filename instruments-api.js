@@ -3,7 +3,12 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 5000
 const bodyParser = require('body-parser')
-const { getInstrument, addInstrument, deleteInstrument } = require('./dal')
+const {
+  getInstrument,
+  addInstrument,
+  deleteInstrument,
+  updateInstrument
+} = require('./dal')
 const NodeHTTPError = require('node-http-error')
 const { propOr, isEmpty, not } = require('ramda')
 const checkRequiredFields = require('./lib/check-required-fields')
@@ -59,6 +64,7 @@ app.post('/instruments', function(req, res, next) {
 })
 
 app.put('./instruments/:instrumentID', function(req, res, next) {
+  console.log('updateInstrument', updateInstrument)
   const instrument = req.body
   updateInstrument(instrument, function(err, success) {
     if (err) {

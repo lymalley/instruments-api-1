@@ -47,7 +47,8 @@ function getDoc(id, callback) {
   db.get(id, callback)
 }
 */
-const updateInstrument = (unstrument, callback) => db.put(instrument, callback)
+const updateInstrument = (instrument, callback) => db.put(instrument, callback)
+
 const dal = {
   getInstrument,
   addInstrument,
